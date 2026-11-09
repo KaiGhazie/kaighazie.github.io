@@ -50,14 +50,14 @@ h2{font-family:var(--hd);font-weight:600;font-size:2.3rem;letter-spacing:.01em;m
 .card{background:var(--surface);border:1px solid var(--line);border-radius:22px 12px 22px 12px;overflow:hidden;text-decoration:none;display:block;transition:transform .25s,box-shadow .25s}
 .card:nth-child(even){border-radius:12px 22px 12px 22px}
 .card:hover{transform:translateY(-6px) rotate(-.8deg);box-shadow:0 10px 30px rgba(125,220,74,.18)}
-.thumb{aspect-ratio:16/9;display:grid;place-items:center;position:relative}
+.thumb{aspect-ratio:16/9;display:grid;place-items:center;position:relative;width:100%;border:0;padding:0;cursor:pointer;background-size:cover;background-position:center;background-color:#0f3a22}iframe.thumb{display:block;cursor:auto}iframe.thumb::before,iframe.thumb::after{display:none}
 .thumb::after{content:"";width:56px;height:56px;border-radius:50%;background:rgba(5,20,10,.65);border:2px solid var(--frog);position:absolute}
 .thumb::before{content:"";position:absolute;z-index:1;border-left:17px solid var(--frog);border-top:10px solid transparent;border-bottom:10px solid transparent;margin-left:5px}
 .thumb small{position:absolute;right:10px;bottom:8px;background:rgba(0,0,0,.7);color:#fff;padding:1px 7px;border-radius:4px;font-size:.78rem}
 .info{padding:15px 18px 18px}.info h3{font-family:var(--hd);font-weight:500;margin:0 0 4px;font-size:1.12rem}.info p{margin:0;color:var(--muted);font-size:.92rem}
 .tag{display:inline-block;margin-top:10px;font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--fly)}
 .voice{display:grid;grid-template-columns:auto 1fr;gap:22px;align-items:center;background:var(--surface);border:1px solid var(--line);border-radius:26px 14px 26px 14px;padding:26px}
-.mic{font-size:3rem}.voice h3{font-family:var(--hd);font-weight:600;margin:0 0 6px;font-size:1.45rem}.voice p{margin:0 0 12px;color:var(--muted)}.voice audio{width:100%;margin-bottom:12px}
+.mic{font-size:3rem}.voice h3{font-family:var(--hd);font-weight:600;margin:0 0 6px;font-size:1.45rem}.voice p{margin:0 0 12px;color:var(--muted)}.voice audio{width:100%;margin-bottom:12px}.vembed{display:block;width:100%;aspect-ratio:16/9;border:0;border-radius:14px;margin-bottom:14px;background:#000}
 @media(max-width:600px){.voice{grid-template-columns:1fr}.pad{width:200px;right:-30px}}
 .cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
 .box{background:var(--surface);border:1px solid var(--line);border-radius:20px 12px 20px 12px;padding:22px}.box h3{font-family:var(--hd);font-weight:600;font-size:1.25rem;margin:0 0 8px;color:var(--frog)}.box p{margin:0;color:var(--muted)}
@@ -74,6 +74,13 @@ nav div{white-space:nowrap;overflow-x:auto}
 .tags{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.tags span{font-size:.78rem;padding:3px 10px;border:1px solid var(--line);border-radius:12px 6px;background:rgba(125,220,74,.08)}
 @media(max-width:420px){.job{grid-template-columns:1fr}}
 footer{padding:60px 0 80px;text-align:center;position:relative}footer h2::after{margin:6px auto 0}footer small{display:block;margin-top:30px;color:var(--muted)}
+.subh{font-family:var(--hd);font-weight:600;font-size:1.6rem;margin:46px 0 4px;color:var(--frog)}
+.thumbs{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:18px}
+.thumbs a{display:block;border:1px solid var(--line);border-radius:18px 10px 18px 10px;overflow:hidden;background:var(--surface);transition:transform .25s,box-shadow .25s}
+.thumbs a:nth-child(even){border-radius:10px 18px 10px 18px}
+.thumbs a:hover{transform:translateY(-5px) rotate(-.7deg);box-shadow:0 10px 30px rgba(125,220,74,.18)}
+.thumbs img{display:block;width:100%;aspect-ratio:16/9;object-fit:cover}
+.bloop{margin:40px auto 0;max-width:320px}.bloop video{display:block;width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:18px 10px 18px 10px;border:1px solid var(--line);background:#000}.bloop span{display:block;margin-top:8px;color:var(--muted);font-size:.85rem}
 </style>
 </head>
 <body>
@@ -96,7 +103,7 @@ footer{padding:60px 0 80px;text-align:center;position:relative}footer h2::after{
 </div></header>
 
 <section id="work"><div class="wrap">
-<h2>Video work</h2><p class="sub">Twelve favorites from the swamp. Tap one to watch.</p>
+<h2>Video work</h2><p class="sub">Favorites from the swamp. Tap a thumbnail to watch.</p>
 <div class="filters" id="filters"></div><div class="grid" id="grid"></div>
 </div></section>
 
@@ -108,6 +115,8 @@ footer{padding:60px 0 80px;text-align:center;position:relative}footer h2::after{
 <section id="experience"><div class="wrap">
 <h2>Past work experience</h2><p class="sub">Channels and teams I’ve worked with.</p>
 <div class="jobs" id="jobs"></div>
+<h3 class="subh">Thumbnail design</h3><p class="sub" style="margin-top:0">Click-worthy thumbnails I designed for the channels above. Tap one to view it full size.</p>
+<div class="thumbs" id="thumbs"></div>
 </div></section>
 
 <section id="fun"><div class="wrap">
@@ -125,6 +134,7 @@ footer{padding:60px 0 80px;text-align:center;position:relative}footer h2::after{
 <h2>Let’s make something great.</h2>
 <p style="color:var(--muted)">Tell me about your channel, your video and your deadline.</p>
 <a class="btn" id="mail" href="#">ghaziekhalid@gmail.com</a><a class="btn ghost" id="ig" href="#">Instagram</a><a class="btn ghost" id="yt" href="#">YouTube</a>
+<div class="bloop"><video src="blooper.mp4" autoplay loop muted playsinline preload="auto" aria-label="Blooper clip, looping"></video><span>Outtakes &amp; bloopers 🐸</span></div>
 <small id="copy"></small>
 </div></footer>
 
@@ -147,39 +157,48 @@ const CONFIG={
  services:[["Long-form editing","Pacing, cuts, B-roll, sound design and color for full-length videos."],["Motion graphics","Animated maps, ranking cards, titles and hand-drawn style backdrops."],["Voice-over","Clear, engaging narration recorded and mixed for your script."]],
  voice:{title:"A Quiet Dreamscape",desc:"My personal sleep-aid channel, where I narrate calm, soothing videos made to help people wind down and fall asleep. This one is a sample of my narration.",audioFile:"",link:"https://youtu.be/r34fZJY6adc?si=p8Ri14SpLFlQjE4Q",channel:"https://www.youtube.com/@aquietdreamscape"},
  projects:[
-  {title:"Pacific Island-Hopping, Ranked",desc:"Documentary ranking with maps and hand-drawn backdrops.",cat:"Ranking",len:"14:20",link:""},
-  {title:"Video 2 title",desc:"What you did: pacing, graphics, sound design.",cat:"Ranking",len:"10:05",link:""},
-  {title:"Video 3 title",desc:"What you did: pacing, graphics, sound design.",cat:"Ranking",len:"08:40",link:""},
-  {title:"Video 4 title",desc:"What you did: pacing, graphics, sound design.",cat:"Documentary",len:"12:30",link:""},
-  {title:"Video 5 title",desc:"What you did: pacing, graphics, sound design.",cat:"Documentary",len:"09:15",link:""},
-  {title:"Video 6 title",desc:"What you did: pacing, graphics, sound design.",cat:"Documentary",len:"16:45",link:""},
-  {title:"Video 7 title",desc:"What you did: pacing, graphics, sound design.",cat:"Ranking",len:"11:00",link:""},
-  {title:"Video 8 title",desc:"What you did: pacing, graphics, sound design.",cat:"Ranking",len:"13:20",link:""},
-  {title:"Video 9 title",desc:"What you did: pacing, graphics, sound design.",cat:"Documentary",len:"07:50",link:""},
-  {title:"Video 10 title",desc:"What you did: pacing, graphics, sound design.",cat:"Shorts",len:"0:45",link:""},
-  {title:"Video 11 title",desc:"What you did: pacing, graphics, sound design.",cat:"Shorts",len:"0:58",link:""},
-  {title:"Video 12 title",desc:"What you did: pacing, graphics, sound design.",cat:"Ranking",len:"15:10",link:""}]
+  /* id = YouTube video ID, start = optional start time in seconds, cats = one or more filter categories.
+     Titles load automatically from YouTube; set title:"..." to override. */
+  {id:"-8cOZq_tPI0",cats:["Gaming Edits"]},
+  {id:"YetVNP_ph28",cats:["Motion Graphics"]},
+  {id:"LQpFQuKWxts",cats:["Motion Graphics"]},
+  {id:"fYnolK75E5E",cats:["Motion Graphics"]},
+  {id:"7pGhtFsdJ80",cats:["Documentary","Short Film"]},
+  {id:"B8hY5hOyfB8",cats:["Documentary"]},
+  {id:"4-zJiwmjHVo",start:2807,cats:["Documentary"]},
+  {id:"Vp4hnlPzvjQ",start:400,cats:["Documentary","Ranking Style"]},
+  {id:"11jp2mBAWb8",start:319,cats:["Documentary"]},
+  {id:"tiTFcGVPV6Q",cats:["Documentary","Ranking Style"]},
+  {id:"eYvxRlR8ess",cats:["Documentary","Compilation"]},
+  {id:"r34fZJY6adc",cats:["Narrating","Motion Graphics"]}]
 };
+const CATS=["All","Documentary","Short Film","Motion Graphics","Compilation","Gaming Edits","Ranking Style","Narrating"];
 /* ===== END EDIT SECTION ===== */
 const $=id=>document.getElementById(id);
 $("stats").innerHTML=CONFIG.stats.map(s=>`<div><b>${s[0]}</b><span>${s[1]}</span></div>`).join("");
 $("tools").innerHTML=CONFIG.tools.map(t=>`<span>${t}</span>`).join("");
 $("services").innerHTML=CONFIG.services.map(s=>`<div class="box"><h3>${s[0]}</h3><p>${s[1]}</p></div>`).join("");
 const v=CONFIG.voice;
-$("vbox").innerHTML=`<h3>${v.title}</h3><p>${v.desc}</p>${v.audioFile?`<audio controls src="${v.audioFile}"></audio>`:""}${v.link?`<a class="btn ghost" style="margin:0" href="${v.link}" target="_blank" rel="noopener">Watch the narration video</a>`:""}${v.channel?`<a class="btn ghost" style="margin:0 0 0 10px" href="${v.channel}" target="_blank" rel="noopener">@aquietdreamscape</a>`:""}`;
+$("vbox").innerHTML=`<h3>${v.title}</h3><p>${v.desc}</p>${v.audioFile?`<audio controls src="${v.audioFile}"></audio>`:""}<iframe class="vembed" src="https://www.youtube-nocookie.com/embed/r34fZJY6adc?rel=0" title="${v.title}" allow="encrypted-media; picture-in-picture; fullscreen" allowfullscreen loading="lazy"></iframe>`+`${v.link?`<a class="btn ghost" style="margin:0" href="${v.link}" target="_blank" rel="noopener">Watch the narration video</a>`:""}${v.channel?`<a class="btn ghost" style="margin:0 0 0 10px" href="${v.channel}" target="_blank" rel="noopener">@aquietdreamscape</a>`:""}`;
 $("mail").href="mailto:"+CONFIG.email;$("yt").href=CONFIG.youtube;$("ig").href=CONFIG.instagram;
 $("copy").textContent="© "+new Date().getFullYear()+" "+CONFIG.name;
-const greens=[["#0f3a22","#7ddc4a"],["#12352f","#58d6a0"],["#2a3a12","#c4e04a"],["#0d2f1c","#3fa34d"]];
-const cats=["All",...new Set(CONFIG.projects.map(p=>p.cat))];let cur="All";
+let cur="All";
+const watchUrl=p=>"https://www.youtube.com/watch?v="+p.id+(p.start?"&t="+p.start+"s":"");
 function draw(){
- $("filters").innerHTML=cats.map(c=>`<button class="${c===cur?"on":""}" data-c="${c}">${c}</button>`).join("");
- $("grid").innerHTML=CONFIG.projects.map((p,i)=>({p,i})).filter(o=>cur==="All"||o.p.cat===cur).map(({p,i})=>{const g=greens[i%4];return `<a class="card" ${p.link?`href="${p.link}" target="_blank" rel="noopener"`:`href="#work"`}>
- <div class="thumb" style="background:linear-gradient(135deg,${g[0]},${g[1]})"><small>${p.len}</small></div>
- <div class="info"><h3>${p.title}</h3><p>${p.desc}</p><span class="tag">${p.cat}</span></div></a>`}).join("");
+ $("filters").innerHTML=CATS.map(c=>`<button class="${c===cur?"on":""}" data-c="${c}">${c}</button>`).join("");
+ $("grid").innerHTML=CONFIG.projects.map((p,i)=>({p,i})).filter(o=>cur==="All"||o.p.cats.includes(cur)).map(({p,i})=>`<div class="card">
+ <button class="thumb" data-i="${i}" aria-label="Play video" style="background-image:url(https://i.ytimg.com/vi/${p.id}/hqdefault.jpg)"></button>
+ <div class="info"><h3 data-t="${i}">${p.title||"Watch on YouTube"}</h3><a class="lnk" style="margin-top:6px" href="${watchUrl(p)}" target="_blank" rel="noopener">Open on YouTube →</a><div>${p.cats.map(c=>`<span class="tag" style="margin-right:12px">${c}</span>`).join("")}</div></div></div>`).join("");
  document.querySelectorAll(".filters button").forEach(b=>b.onclick=()=>{cur=b.dataset.c;draw()});
+ document.querySelectorAll(".thumb").forEach(t=>t.onclick=()=>{const p=CONFIG.projects[t.dataset.i];
+  const f=document.createElement("iframe");f.className="thumb";f.allow="autoplay; encrypted-media; picture-in-picture; fullscreen";f.allowFullscreen=true;f.title=p.title||"YouTube video";
+  f.src="https://www.youtube-nocookie.com/embed/"+p.id+"?autoplay=1&rel=0"+(p.start?"&start="+p.start:"");t.replaceWith(f)});
+ CONFIG.projects.forEach((p,i)=>{const el=document.querySelector(`[data-t="${i}"]`);if(el&&p.title)el.textContent=p.title});
 }
+CONFIG.projects.forEach(p=>{if(!p.title)fetch("https://noembed.com/embed?url="+encodeURIComponent("https://www.youtube.com/watch?v="+p.id)).then(r=>r.json()).then(d=>{if(d.title){p.title=d.title;draw()}}).catch(()=>{})});
 draw();
 $("jobs").innerHTML=CONFIG.jobs.map(j=>`<article class="job"><div class="logo">${j.logo?`<img src="${j.logo}" alt="${j.ch} logo">`:`<span>${j.ch[0]}</span>`}</div><div><h3>${j.ch}</h3>${j.company?`<div class="co">${j.company}</div>`:""}<div class="role">${j.role}</div>${j.dates?`<span class="when">${j.dates}</span>`:""}<div class="tags">${j.tags.map(t=>`<span>${t}</span>`).join("")}</div>${j.link?`<a class="lnk" href="${j.link}" target="_blank" rel="noopener">${j.linkText}</a>`:""}</div></article>`).join("");
+$("thumbs").innerHTML=Array.from({length:6},(_,i)=>`<a href="thumbnails/thumb-${i+1}.jpg" target="_blank" rel="noopener"><img src="thumbnails/thumb-${i+1}.jpg" alt="Thumbnail design ${i+1}"></a>`).join("");
 const FLY='<svg viewBox="0 0 30 20"><defs><radialGradient id="gl"><stop offset="0" stop-color="#fbf5a0" stop-opacity=".95"/><stop offset=".45" stop-color="#e8f06a" stop-opacity=".45"/><stop offset="1" stop-color="#e8f06a" stop-opacity="0"/></radialGradient></defs><circle class="g" cx="22" cy="12.5" r="11" fill="url(#gl)"/><ellipse class="w" cx="15" cy="6.5" rx="8" ry="3" fill="#e9f9ff" opacity=".6" transform="rotate(-18 15 6.5)"/><ellipse cx="14" cy="10.6" rx="7.5" ry="2.6" fill="#3a3626" transform="rotate(-6 14 10.6)"/><ellipse class="g" cx="22" cy="12.4" rx="5" ry="3.3" fill="#f8f08c"/><ellipse cx="7.4" cy="10.6" rx="3" ry="2.5" fill="#ef9a4e"/><circle cx="4.2" cy="11.4" r="1.9" fill="#262013"/><path d="M3.6,10 Q2,7.6 0.6,7.4 M5,9.8 Q4.6,7.4 3.6,6.4" stroke="#262013" stroke-width=".6" fill="none"/><path d="M9,13 l-1,3 M13,13 l-.6,3.2 M17,13 l.4,3" stroke="#262013" stroke-width=".7"/></svg>';
 const DFLY='<svg viewBox="0 0 40 30"><g class="dw"><ellipse cx="10" cy="10" rx="10" ry="2.7" fill="#d6f6ff" fill-opacity=".6" stroke="#9fe6f2" stroke-width=".5" transform="rotate(-14 10 10)"/><ellipse cx="30" cy="10" rx="10" ry="2.7" fill="#d6f6ff" fill-opacity=".6" stroke="#9fe6f2" stroke-width=".5" transform="rotate(14 30 10)"/><ellipse cx="11" cy="14.5" rx="9" ry="2.5" fill="#d6f6ff" fill-opacity=".5" stroke="#9fe6f2" stroke-width=".5" transform="rotate(10 11 14.5)"/><ellipse cx="29" cy="14.5" rx="9" ry="2.5" fill="#d6f6ff" fill-opacity=".5" stroke="#9fe6f2" stroke-width=".5" transform="rotate(-10 29 14.5)"/></g><path d="M20,7 L20,28" stroke="#3fd0c0" stroke-width="2.4" stroke-linecap="round"/><path d="M20,12 l0,14" stroke="#1f8f86" stroke-width=".7" stroke-dasharray="1.6 1.6"/><circle cx="20" cy="6" r="3" fill="#5de3d2"/><circle cx="18.6" cy="5.2" r="1.1" fill="#12332f"/><circle cx="21.4" cy="5.2" r="1.1" fill="#12332f"/></svg>';
 for(let i=0;i<14;i++){const f=document.createElement("div");f.className="fly";f.innerHTML=FLY;f.style.left=Math.random()*100+"%";f.style.top=Math.random()*100+"%";f.style.animationDelay=(-Math.random()*14)+"s";f.style.animationDuration=(12+Math.random()*10)+"s";const sv=f.firstChild;if(Math.random()<.5)sv.style.transform="scaleX(-1)";sv.querySelectorAll(".g").forEach(e=>e.style.animationDelay=(-Math.random()*4)+"s");$("flies").appendChild(f)}
